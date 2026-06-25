@@ -29,7 +29,7 @@ Guía práctica para decidir cuándo usar skill, agente o comando en un flujo SD
 
 ## Skills y agentes disponibles
 
-Estas son las skills y agentes definidos en esta workspace, espejados en `.opencode/`, `.claude/`, `.agents/` y `.codex/`:
+Estas son las skills y agentes incluidos en el repositorio (se instalan con `scripts/install-sdd.sh`):
 
 | Paso del flujo | Tipo | Nombre |
 | --- | --- | --- |

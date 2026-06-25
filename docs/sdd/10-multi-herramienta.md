@@ -2,89 +2,71 @@
 
 La mejor forma de trabajar con OpenCode, Claude Code y Codex es separar entre:
 
-- **contenido compartido**
-- **adaptadores por herramienta**
+- **contenido compartido** (una sola fuente de verdad)
+- **adaptadores por herramienta** (generados por el instalador)
 
 ## Contenido compartido
 
-Guarda aqui lo que no deberia cambiar entre herramientas:
+El repositorio SDD contiene la fuente canónica:
 
-- guia de SDD
-- plantilla de spec
-- skill de entrevista `idea-to-spec`
-- skill de plan `spec-to-plan`
-- skill de tareas `plan-to-tasks`
-- skill de review `review-spec`
-- agente de implementacion `implement`
-- agente de plan `spec-planner`
-- agente de review `spec-reviewer`
-- reglas de calidad
-- ejemplo de flujo
+```text
+agents/         ← agentes (YAML frontmatter + Markdown)
+skills/         ← skills (formato Open Agent Skills)
+templates/      ← plantillas de spec, plan, tasks, review
+```
 
-## Adaptadores por herramienta
+## Instalador
 
-Mantén solo lo minimo por herramienta:
+```bash
+scripts/install-sdd.sh <dest-dir> [cli ...]
+```
 
-- `AGENTS.md` para OpenCode y Codex
-- `CLAUDE.md` para Claude Code
-- skills espejo en:
-  - `.opencode/skills/`
-  - `.claude/skills/`
-  - `.agents/skills/`
-- agentes espejo en:
-  - `.opencode/agents/`
-  - `.claude/agents/`
-  - `.codex/agents/`
-- instalador en `install-sdd.sh`
+Copia agents, skills y templates a `.sdd/` en el proyecto destino y genera los adaptadores para cada CLI seleccionado.
+
+CLIs disponibles: `claude`, `agents`, `opencode`, `codex`. Si no se especifica ninguno, instala todos.
+
+```bash
+# Instalar para Claude Code y Codex
+scripts/install-sdd.sh /ruta/al/proyecto claude codex
+
+# Instalar para todos los CLIs
+scripts/install-sdd.sh /ruta/al/proyecto
+```
+
+## Resultado en el proyecto destino
+
+```text
+proyecto/
+├── .sdd/
+│   ├── agents/          ← fuente local (copiados)
+│   ├── skills/          ← fuente local (copiados)
+│   └── templates/       ← plantillas (copiadas)
+├── .claude/             ← symlinks a .sdd/ (si seleccionado)
+├── .agents/             ← symlinks a .sdd/ (si seleccionado)
+├── .opencode/           ← skills: symlinks, agentes: generados
+└── .codex/              ← skills: symlinks, agentes: TOML generado
+```
+
+## Formatos por herramienta
+
+| CLI | Skills | Agentes |
+|-----|--------|---------|
+| claude | symlink a .sdd/ | symlink a .sdd/ |
+| agents | symlink a .sdd/ | symlink a .sdd/ |
+| opencode | symlink a .sdd/ | generados (schema `permission:` granular) |
+| codex | symlink a .sdd/ | generados TOML (`developer_instructions`, `sandbox_mode`) |
 
 ## Regla de oro
 
-No pongas la misma logica del proceso en tres formatos distintos.
+No pongas la misma lógica del proceso en tres formatos distintos.
 
-Ponla una vez como skill reutilizable, y luego repitela solo como envoltorio o referencia de arranque.
+Ponla una vez en el repo SDD y usa `install-sdd.sh` para desplegar.
 
-## Estructura recomendada
+## Variables de entorno
 
-```text
-docs/sdd/
-  01-que-es-sdd.md
-  02-flujo.md
-  03-como-escribir-buenas-specs.md
-  04-de-spec-a-plan-tareas-y-review.md
-  05-referencias-y-skills.md
-  06-plantilla-de-spec.md
-  07-guia-practica.md
-  08-ejemplo-completo.md
-  09-herramienta-por-paso.md
-  10-multi-herramienta.md
-  11-agente-implementador.md
-  12-installer.md
-  secciones-spec-explicadas.md
-  constitucion-guia.md
-templates/
-  spec-template.md
-  plan-template.md
-  tasks-template.md
-  review-template.md
-.opencode/skills/idea-to-spec/SKILL.md
-.claude/skills/idea-to-spec/SKILL.md
-.agents/skills/idea-to-spec/SKILL.md
-.codex/skills/idea-to-spec/SKILL.md
-AGENTS.md
-CLAUDE.md
-```
-
-## Lo que yo haria
-
-Si tuviera que dejarlo listo hoy:
-
-1. Mantendria `idea-to-spec` como skill espejo en las tres rutas.
-2. Mantendria `spec-to-plan`, `plan-to-tasks` y `review-spec` como skills espejo en las tres rutas.
-3. Mantendria `spec-planner`, `spec-reviewer` e `implement` como agentes espejo en las tres rutas.
-4. Haria `AGENTS.md` y `CLAUDE.md` muy cortos, apuntando a `docs/sdd/README.md`.
-5. Haria los comandos de cada herramienta solo si realmente aportan ergonomia.
-6. Mantendria las decisiones de proceso en la documentacion compartida, no repartidas.
+- `CODEX_MODEL` — modelo de Codex (default: `gpt-5.4`)
+- `CODEX_REASONING` — esfuerzo de razonamiento (default: `high`)
 
 ## Ventaja
 
-Esto te permite cambiar de herramienta sin cambiar de metodologia.
+Esto te permite cambiar de herramienta sin cambiar de metodología.

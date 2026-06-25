@@ -40,24 +40,22 @@ Spec Kit instala skills o comandos según la integración. Los nombres más visi
 
 Además, la documentación de Spec Kit indica comandos opcionales como `speckit-clarify`, `speckit-analyze` y `speckit-checklist`.
 
-### Skill creada en esta workspace
+### Skills incluidas
 
 - `idea-to-spec`: ayuda a pasar de una idea concreta a una definición lista para escribir la spec.
-- La misma skill está espejada en `.opencode/skills/`, `.claude/skills/` y `.agents/skills/` para máxima compatibilidad.
 - `spec-to-plan`: convierte una spec en un plan técnico.
 - `plan-to-tasks`: convierte un plan en tareas ejecutables.
 - `review-spec`: revisa spec, plan y tareas antes de implementar.
 
-### Agente creado en esta workspace
+### Agentes incluidos
 
 - `spec-planner`: redacta el plan técnico.
 - `spec-reviewer`: audita spec, plan y tareas.
 - `implement`: lleva una spec, plan y tareas aprobadas a código con el mínimo cambio correcto.
-- La misma definición está espejada para OpenCode, Claude Code y Codex.
 
 ### Instalador
 
-- `install-sdd.sh`: copia el pack a un directorio destino.
+- `scripts/install-sdd.sh`: instala skills, agentes y plantillas en un proyecto destino, con adaptadores para cada CLI.
 
 ## Recomendación práctica
 
