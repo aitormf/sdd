@@ -24,7 +24,14 @@ Las tareas deben ser:
 
 ## Implementación
 
-Implementa una tarea a la vez o en grupos pequeños.
+Implementa una tarea a la vez o en grupos pequeños. SDD se complementa bien con TDD: los criterios de aceptación de la spec se traducen directamente en tests antes de escribir el código.
+
+1. Toma un criterio de aceptación o un requisito de la spec.
+2. Escribe el test que lo verifica (debe fallar).
+3. Implementa el código mínimo para que pase.
+4. Refactoriza si es necesario.
+
+Esto no es obligatorio, pero sí recomendable: si la spec define el "qué", los tests verifican el "qué" y el código resuelve el "cómo". Los tres quedan alineados.
 
 ## Review
 
@@ -39,13 +46,7 @@ La revisión debería comprobar al menos esto:
 
 ## Flujo recomendado en práctica
 
-1. Escribe la spec.
-2. Añade clarificaciones.
-3. Haz el plan.
-4. Genera tareas.
-5. Implementa.
-6. Revisa contra la spec.
-7. Corrige desviaciones.
+Ver el flujo canónico en [02-flujo.md](02-flujo.md). Este documento detalla los pasos 4–8 (Plan, Tareas, Implementación, Validación y Corrección).
 
 ## Sobre el término “review”
 

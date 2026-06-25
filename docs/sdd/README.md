@@ -25,6 +25,17 @@ Guía práctica en español para aprender y aplicar Spec-Driven Development (SDD
 11. `docs/sdd/11-agente-implementador.md`
 12. `docs/sdd/12-installer.md`
 
+## Otros recursos del repositorio
+- [`templates/`](../../templates/) — plantillas operativas para [spec](../../templates/spec-template.md), [plan](../../templates/plan-template.md), [tareas](../../templates/tasks-template.md) y [review](../../templates/review-template.md). Son las que usan las skills y el agente implementador.
+- [`docs/cercanias-madrid/`](../cercanias-madrid/) — ejemplo completo de SDD aplicado a un proyecto real (clarificaciones, spec, plan y tareas).
+- [`secciones-spec-explicadas.md`](secciones-spec-explicadas.md) — guía detallada de cada sección de la plantilla de spec.
+- [`constitucion-guia.md`](constitucion-guia.md) — guía para escribir la constitución del proyecto.
+## Convención de nombres de artefactos
+Al aplicar SDD en un proyecto, los artefactos generados deben llamarse:
+- `spec.md` — la especificación de la funcionalidad.
+- `plan.md` — el plan técnico derivado de la spec.
+- `tasks.md` — las tareas derivadas del plan.
+- `review.md` — el resultado de la revisión.
+Las plantillas en `templates/` llevan el sufijo `-template` para distinguirlas de los artefactos generados.
 ## Idea central
-
 En SDD la spec es la fuente de verdad compartida. El código, los tests, el plan y las tareas deben derivar de esa spec, no al revés.

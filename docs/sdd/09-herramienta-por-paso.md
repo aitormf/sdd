@@ -1,6 +1,6 @@
-# Herramienta por Paso
+# Herramienta por paso
 
-Guia practica para decidir cuando usar skill, agente o comando en un flujo SDD.
+Guía práctica para decidir cuándo usar skill, agente o comando en un flujo SDD.
 
 ## Resumen corto
 
@@ -27,40 +27,22 @@ Guia practica para decidir cuando usar skill, agente o comando en un flujo SDD.
 - Si quieres **razonamiento con herramientas** y varias acciones, usa un **agente**.
 - Si quieres un **atajo invocable** para una tarea concreta, usa un **comando**.
 
-## Mi recomendacion para tu caso
+## Skills y agentes disponibles
 
-Para tu flujo de SDD yo haria esto:
+Estas son las skills y agentes definidos en esta workspace, espejados en `.opencode/`, `.claude/`, `.agents/` y `.codex/`:
 
-1. `idea-to-spec` como **skill**.
-2. `specify` o `draft-spec` como **comando** que use un agente de entrevista.
-3. `plan-spec` como **agente**.
-4. `research-spec` como **agente subtask** read-only.
-5. `tasks-spec` como **comando** o **agente** si quieres trazabilidad fina.
-6. `review-spec` como **agente read-only**.
-7. `implement` como **agente** con permisos de escritura.
+| Paso del flujo | Tipo | Nombre |
+| --- | --- | --- |
+| Idea → definición clara | Skill | `idea-to-spec` |
+| Spec → plan técnico | Skill | `spec-to-plan` |
+| Plan → tareas | Skill | `plan-to-tasks` |
+| Review de spec, plan y tareas | Skill / Agente | `review-spec` / `spec-reviewer` |
+| Plan técnico con análisis | Agente | `spec-planner` |
+| Implementación | Agente | `implement` |
 
-## Mejor compatibilidad entre OpenCode, Claude Code y Codex
+## Compatibilidad entre herramientas
 
-La mejor estrategia no es intentar que una misma carpeta haga cosas distintas en cada herramienta. La mejor estrategia es:
-
-1. Definir el contenido reutilizable como **skills Agent Skills**.
-2. Guardar una copia espejo del mismo skill en:
-   - `.opencode/skills/<nombre>/SKILL.md`
-   - `.claude/skills/<nombre>/SKILL.md`
-   - `.agents/skills/<nombre>/SKILL.md`
-3. Guardar una copia espejo del agente de implementacion en:
-   - `.opencode/agents/<nombre>.md`
-   - `.claude/agents/<nombre>.md`
-   - `.codex/agents/<nombre>.toml`
-4. Usar `AGENTS.md` y `CLAUDE.md` solo como instrucciones de arranque, no como el lugar donde vive la logica de proceso.
-5. Usar comandos solo como wrappers finos cuando de verdad quieras una accion invocable por nombre.
-
-## Resultado practico
-
-- OpenCode carga `AGENTS.md`, `CLAUDE.md` y skills desde `.opencode/`, `.claude/` y `.agents/`.
-- Claude Code carga skills desde `.claude/skills/` y subagents desde `.claude/agents/`.
-- Codex carga skills desde `.agents/skills/` y custom agents desde `.codex/agents/`.
-- Por tanto, skills espejados para entrevistas y agentes espejados para implementacion te dan la mayor compatibilidad con el menor cambio de flujo.
+Para la estrategia de espejo de skills y agentes entre OpenCode, Claude Code y Codex, ver [10-multi-herramienta.md](10-multi-herramienta.md).
 
 
 ## Referencias

@@ -17,7 +17,7 @@ Agente para convertir una spec ya aprobada, su plan y sus tareas en cambios de c
 
 ## Responsabilidad
 
-- Leer `spec.md`, `plan.md` y `tasks.md`.
+- Leer `spec.md`, `plan.md` y `tasks.md` (ver [convención de nombres](README.md#convención-de-nombres-de-artefactos)).
 - Implementar una tarea a la vez o en grupos pequenos.
 - Mantener el cambio minimo necesario.
 - Ejecutar las verificaciones relevantes.
@@ -28,8 +28,9 @@ Agente para convertir una spec ya aprobada, su plan y sus tareas en cambios de c
 1. No inventar alcance nuevo.
 2. No reestructurar por gusto.
 3. No tocar mas archivos de los necesarios.
-4. Preferir pruebas y ajustes pequenos.
-5. Parar y avisar si falta una decision de producto.
+4. Preferir TDD: escribir el test que verifica el criterio de aceptación antes del código, comprobar que falla, implementar, y verificar que pasa.
+5. Preferir ajustes pequeños sobre cambios grandes.
+6. Parar y avisar si falta una decisión de producto.
 
 ## Referencias
 

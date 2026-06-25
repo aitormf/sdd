@@ -1,36 +1,36 @@
 # Clarificaciones iniciales
 
-Estas son las preguntas que deberias cerrar antes de implementar.
+Estas son las preguntas que deberías cerrar antes de implementar.
 
 ## Fuente de datos
 
-- Que endpoint GTFS-RT se usara exactamente?
-- Es una sola fuente o varias por linea?
-- Hay limites de uso o autenticacion?
+- ¿Qué endpoint GTFS-RT se usará exactamente?
+- ¿Es una sola fuente o varias por línea?
+- ¿Hay límites de uso o autenticación?
 
-## Deteccion
+## Detección
 
-- Que intervalo de polling quieres?
-- Cuantas observaciones consecutivas deben superar el umbral?
-- Cual sera el umbral inicial de retraso?
-- Que ventana de enfriamiento quieres para una alerta?
+- ¿Qué intervalo de polling quieres?
+- ¿Cuántas observaciones consecutivas deben superar el umbral?
+- ¿Cuál será el umbral inicial de retraso?
+- ¿Qué ventana de enfriamiento quieres para una alerta?
 
 ## Telegram
 
-- La suscripcion sera por linea, por varias lineas o por lineas favoritas?
-- El bot enviara alertas a chats privados, grupos o ambos?
-- Quieres comandos simples o un flujo guiado con botones?
+- ¿La suscripción será por línea, por varias líneas o por líneas favoritas?
+- ¿El bot enviará alertas a chats privados, grupos o ambos?
+- ¿Quieres comandos simples o un flujo guiado con botones?
 
-## Operacion
+## Operación
 
-- Quieres panel web de administracion en el MVP?
-- Que metricas son imprescindibles desde el primer dia?
-- Como quieres revisar manualmente falsos positivos?
+- ¿Quieres panel web de administración en el MVP?
+- ¿Qué métricas son imprescindibles desde el primer día?
+- ¿Cómo quieres revisar manualmente falsos positivos?
 
-## Recomendacion para empezar
+## Recomendación para empezar
 
 - Una sola fuente GTFS-RT.
 - Polling cada 30 a 60 segundos.
-- Regla simple por media de retraso y numero minimo de trenes.
+- Regla simple por media de retraso y número mínimo de trenes.
 - Ventana de enfriamiento de 10 a 15 minutos.
 - Bot por comandos de Telegram primero, sin panel web.

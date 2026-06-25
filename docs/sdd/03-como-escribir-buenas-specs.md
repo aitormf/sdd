@@ -29,27 +29,9 @@ Una buena spec minimiza interpretación y maximiza verificabilidad.
 - “Hazlo escalable” sin contexto.
 - Requisitos mezclados con implementación.
 
-## Plantilla mínima
+## Plantillas
 
-```md
-# Título
-
-## Objetivo
-
-## Contexto
-
-## Usuarios
-
-## Requisitos funcionales
-
-## Requisitos no funcionales
-
-## Casos límite
-
-## Criterios de aceptación
-
-## Fuera de alcance
-```
+Ver las plantillas (mínima y completa) en [06-plantilla-de-spec.md](06-plantilla-de-spec.md) y la explicación detallada de cada sección en [secciones-spec-explicadas.md](secciones-spec-explicadas.md).
 
 ## Truco útil
 

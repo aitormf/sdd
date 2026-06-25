@@ -1,93 +1,123 @@
-# Spec: Alertas en Tiempo Real para Cercanias Madrid
+# Spec: Alertas en tiempo real para Cercanías Madrid
 
 ## Objetivo
 
-Detectar incidencias probables en lineas de Cercanias Madrid a partir de datos publicos de puntualidad y notificar a usuarios suscritos por Telegram.
+Detectar incidencias probables en líneas de Cercanías Madrid a partir de datos públicos de puntualidad y notificar a usuarios suscritos por Telegram.
 
-## Problema
+## Problema que resuelve
 
-Renfe puede tardar en publicar avisos oficiales, pero los retrasos en tiempo real suelen dar senales tempranas de que hay una incidencia en una linea.
+Renfe puede tardar en publicar avisos oficiales, pero los retrasos en tiempo real suelen dar señales tempranas de que hay una incidencia en una línea. Los usuarios no tienen forma de saber que su tren va a llegar tarde hasta que ya están en el andén.
 
-## Alcance del MVP
+## Usuarios
 
-- Leer datos GTFS-RT de posicion y/o puntualidad desde fuentes publicas.
-- Analizar retrasos por linea con una regla simple y explicable.
-- Generar una alerta cuando una linea supera un umbral de anomalia.
-- Enviar notificaciones por Telegram a usuarios suscritos a esa linea.
-- Evitar avisos duplicados durante una misma incidencia.
+- **Viajero habitual:** usa Cercanías a diario para ir al trabajo. Necesita saber cuanto antes si su línea tiene problemas para buscar alternativas.
+- **Viajero ocasional:** usa Cercanías puntualmente. Quiere recibir alertas solo de la línea que va a usar ese día.
 
-## Fuera de alcance
+## User stories
 
-- Prediccion avanzada con ML.
-- App movil propia.
-- Integraciones con otras redes ferroviarias.
-- Intervencion manual de operadores en tiempo real.
-
-## Actores
-
-- Usuario suscrito por Telegram.
-- Servicio de ingesta GTFS-RT.
-- Servicio de deteccion de incidencias.
-- Servicio de notificaciones.
-- Bot de Telegram.
+- Como **viajero habitual**, quiero suscribirme a mi línea de Cercanías para recibir alertas automáticas cuando haya incidencias.
+- Como **viajero habitual**, quiero darme de baja de una línea cuando deje de usarla para no recibir alertas innecesarias.
+- Como **viajero ocasional**, quiero suscribirme y darme de baja fácilmente desde Telegram para no tener que instalar otra app.
+- Como **viajero habitual**, quiero que la alerta me diga qué línea está afectada y un resumen del motivo para decidir rápidamente si busco alternativa.
 
 ## Requisitos funcionales
 
-### Suscripcion
+### Suscripción
 
-- El usuario puede suscribirse a una o varias lineas mediante Telegram.
-- El usuario puede darse de baja de una linea.
-- El sistema conserva la preferencia de linea por usuario.
+- RF-01: El usuario puede suscribirse a una o varias líneas mediante Telegram.
+- RF-02: El usuario puede darse de baja de una línea.
+- RF-03: El sistema conserva la preferencia de línea por usuario.
 
 ### Ingesta
 
-- El sistema consulta periodicamente las fuentes GTFS-RT.
-- El sistema normaliza los datos relevantes por tren y linea.
-- Si una fuente falla de forma temporal, el sistema registra el error y continua con el siguiente ciclo.
+- RF-04: El sistema consulta periódicamente las fuentes GTFS-RT.
+- RF-05: El sistema normaliza los datos relevantes por tren y línea.
+- RF-06: Si una fuente falla de forma temporal, el sistema registra el error y continúa con el siguiente ciclo.
 
-### Deteccion
+### Detección
 
-- El sistema calcula un indicador sencillo de anomalia por linea.
-- El sistema genera una alerta cuando el indicador supera un umbral predefinido.
-- El sistema evita emitir multiples alertas equivalentes dentro de una ventana de enfriamiento.
+- RF-07: El sistema calcula un indicador sencillo de anomalía por línea basado en la media de retraso y el número de trenes afectados.
+- RF-08: El sistema genera una alerta cuando el indicador supera un umbral predefinido durante varias observaciones consecutivas.
+- RF-09: El sistema evita emitir múltiples alertas equivalentes dentro de una ventana de enfriamiento.
 
-### Notificacion
+### Notificación
 
-- El sistema envia mensajes a los usuarios suscritos a la linea afectada.
-- El mensaje incluye la linea, la hora de deteccion y un resumen breve del motivo.
+- RF-10: El sistema envía mensajes a los usuarios suscritos a la línea afectada.
+- RF-11: El mensaje incluye la línea, la hora de detección y un resumen breve del motivo.
 
 ## Requisitos no funcionales
 
-- La arquitectura debe ser simple y ejecutable con Docker Compose.
-- Los servicios deben estar desacoplados.
-- Debe haber trazabilidad basica de eventos y errores.
-- El sistema debe ser facil de observar y depurar.
-- La solucion debe tolerar fallos temporales de fuentes externas.
+- RNF-01: La arquitectura debe ser simple y ejecutable con Docker Compose.
+- RNF-02: Los servicios deben estar desacoplados mediante un broker de mensajería.
+- RNF-03: Debe haber trazabilidad básica de eventos y errores (logs estructurados).
+- RNF-04: El sistema debe tolerar fallos temporales de fuentes externas sin caerse.
+- RNF-05: El sistema debe ser fácil de observar y depurar.
 
-## Reglas de negocio iniciales
+## Casos límite
 
-- Una alerta representa una sospecha de incidencia, no una confirmacion oficial.
-- Una linea con retrasos anormalmente altos durante varias observaciones puede disparar una alerta.
-- Una alerta debe ser deduplicada durante una ventana temporal.
+- ¿Qué pasa si la fuente GTFS-RT devuelve datos vacíos? → Se registra como error y se espera al siguiente ciclo.
+- ¿Qué pasa si no se puede identificar la línea de un tren? → Se descarta esa observación y se registra.
+- ¿Qué pasa si un usuario se suscribe a una línea que no existe? → Se informa al usuario y no se crea la suscripción.
+- ¿Qué pasa si hay retrasos en varias líneas simultáneamente? → Se generan alertas independientes por línea.
+- ¿Qué pasa si Telegram está caído? → Se registra el fallo y se reintenta.
+- ¿Qué pasa si el umbral genera muchos falsos positivos? → El umbral es configurable sin redesplegar.
 
-## Criterios de aceptacion
+## Criterios de aceptación
 
-- Dado un usuario suscrito, cuando el sistema detecta una alerta en su linea, recibe un mensaje por Telegram.
-- Dado un fallo temporal en la fuente GTFS-RT, el sistema no se cae y sigue ejecutando el siguiente ciclo.
-- Dada una linea con retrasos persistentes por encima del umbral, el sistema genera una alerta una sola vez dentro de la ventana de enfriamiento.
-- Dado un usuario dado de baja, el sistema deja de notificarle sobre esa linea.
+- Dado un usuario suscrito, cuando el sistema detecta una alerta en su línea, entonces recibe un mensaje por Telegram con la línea, hora y motivo.
+- Dado un fallo temporal en la fuente GTFS-RT, cuando el sistema intenta consultar, entonces registra el error y sigue ejecutando el siguiente ciclo sin caerse.
+- Dada una línea con retrasos persistentes por encima del umbral, cuando se cumplen las observaciones consecutivas requeridas, entonces el sistema genera una alerta una sola vez dentro de la ventana de enfriamiento.
+- Dado un usuario dado de baja, cuando se detecta una alerta en su antigua línea, entonces el sistema no le notifica.
+- Dado un usuario que envía `/subscribe C4`, cuando el comando se procesa, entonces el sistema confirma la suscripción y la persiste.
+
+## Alcance
+
+Ingesta de datos GTFS-RT, detección de incidencias con una regla simple, notificación por Telegram y gestión de suscripciones por comandos.
+
+## Fuera de alcance
+
+- Predicción avanzada con ML.
+- App móvil propia.
+- Integraciones con otras redes ferroviarias.
+- Intervención manual de operadores en tiempo real.
+- Panel web de administración.
+
+## Entidades / Modelo de datos
+
+- **Observación:** id, línea, tren, retraso en segundos, timestamp, fuente.
+- **Alerta:** id, línea, detectada_en, severidad, resumen, ventana de enfriamiento.
+- **Usuario:** telegram_id, nombre.
+- **Suscripción:** usuario, línea, fecha de alta.
+
+## Métricas de éxito
+
+- El 80% de las incidencias reales de Cercanías generan una alerta antes de que Renfe publique el aviso oficial.
+- Menos del 20% de las alertas son falsos positivos en el primer mes.
+- Los usuarios suscritos reciben la notificación en menos de 2 minutos desde la detección.
+
+## Dependencias
+
+- Fuente pública GTFS-RT con datos de Cercanías Madrid (por validar disponibilidad y formato).
+- API de Telegram Bot (disponible, sin coste para bots).
+- Docker y Docker Compose para despliegue local.
+
+## Riesgos
+
+- Calidad variable de los datos públicos GTFS-RT — puede haber huecos o datos incorrectos.
+- Rate limits o caídas de la fuente GTFS-RT.
+- Falsos positivos por umbrales demasiado agresivos.
+- No poder identificar la línea de cada tren con fiabilidad suficiente.
 
 ## Supuestos
 
-- Las fuentes publicas GTFS-RT estan disponibles y contienen los datos necesarios para el MVP.
-- Se puede identificar la linea de cada tren con suficiente fiabilidad.
-- Telegram sera el canal de notificacion principal del MVP.
+- Las fuentes públicas GTFS-RT están disponibles y contienen los datos necesarios para el MVP.
+- Se puede identificar la línea de cada tren con suficiente fiabilidad.
+- Telegram será el canal de notificación principal del MVP.
 
 ## Preguntas abiertas
 
-- Que fuente GTFS-RT exacta se usara?
-- Cada cuanto se debe consultar la fuente?
-- Cual es el umbral inicial de anomalia?
-- Como se define una ventana de enfriamiento razonable?
-- Se notificara por linea, por tramo o por estacion?
-- Se necesitara una pagina web de administracion en el MVP?
+- ¿Qué fuente GTFS-RT exacta se usará?
+- ¿Cada cuánto se debe consultar la fuente?
+- ¿Cuál es el umbral inicial de anomalía?
+- ¿Cómo se define una ventana de enfriamiento razonable?
+- ¿Se notificará por línea, por tramo o por estación?

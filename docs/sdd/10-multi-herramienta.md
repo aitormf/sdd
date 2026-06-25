@@ -57,9 +57,19 @@ docs/sdd/
   08-ejemplo-completo.md
   09-herramienta-por-paso.md
   10-multi-herramienta.md
+  11-agente-implementador.md
+  12-installer.md
+  secciones-spec-explicadas.md
+  constitucion-guia.md
+templates/
+  spec-template.md
+  plan-template.md
+  tasks-template.md
+  review-template.md
 .opencode/skills/idea-to-spec/SKILL.md
 .claude/skills/idea-to-spec/SKILL.md
 .agents/skills/idea-to-spec/SKILL.md
+.codex/skills/idea-to-spec/SKILL.md
 AGENTS.md
 CLAUDE.md
 ```

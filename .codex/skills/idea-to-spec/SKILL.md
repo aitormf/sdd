@@ -26,10 +26,11 @@ Ask in rounds:
 
 1. Problem and outcome.
 2. Users and actors.
-3. Scope and out-of-scope.
-4. Behavior and edge cases.
-5. Non-functional constraints.
-6. Acceptance criteria.
+3. User stories (what each user needs and why).
+4. Scope and out-of-scope.
+5. Behavior and edge cases.
+6. Non-functional constraints.
+7. Acceptance criteria.
 
 If the idea is still ambiguous after a round, ask follow-up questions only for the unresolved parts.
 
@@ -62,7 +63,9 @@ When responding, structure the output like this:
 Stop asking questions when enough detail exists to draft a spec with:
 
 - objective
+- problem statement
 - users
+- user stories
 - scope
 - functional requirements
 - non-functional requirements
@@ -73,4 +76,4 @@ At that point, offer to draft the spec or generate a spec template.
 
 ## Reference template
 
-If helpful, align the captured information with `templates/spec-template.md`.
+If helpful, align the captured information with `docs/sdd/06-plantilla-de-spec.md`.

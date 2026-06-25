@@ -1,21 +1,21 @@
-# Plan tecnico: MVP Cercanias Madrid
+# Plan técnico: MVP Cercanías Madrid
 
-## Objetivo tecnico
+## Objetivo técnico
 
-Construir un sistema pequeno de microservicios con broker de mensajeria, persistencia separada por servicio y observabilidad basica.
+Construir un sistema pequeño de microservicios con broker de mensajería, persistencia separada por servicio y observabilidad básica.
 
 ## Arquitectura propuesta
 
 ### Servicios
 
 - `ingestion-service`: consulta GTFS-RT y publica observaciones normalizadas.
-- `analysis-service`: consume observaciones, calcula anomalias y emite eventos de alerta.
-- `notification-service`: consume eventos de alerta y envia mensajes Telegram.
+- `analysis-service`: consume observaciones, calcula anomalías y emite eventos de alerta.
+- `notification-service`: consume eventos de alerta y envía mensajes Telegram.
 - `telegram-bot-service`: gestiona suscripciones y bajas por comandos de Telegram.
 
 ### Infraestructura
 
-- `rabbitmq` como broker de mensajeria.
+- `rabbitmq` como broker de mensajería.
 - `postgres` para persistencia del MVP.
 - `docker-compose` para levantar todo localmente.
 
@@ -30,46 +30,46 @@ Construir un sistema pequeno de microservicios con broker de mensajeria, persist
 ### analysis-service
 
 - Consumir observaciones.
-- Mantener una vista agregada por linea y ventana de tiempo.
+- Mantener una vista agregada por línea y ventana de tiempo.
 - Emitir `line.incident.detected` cuando corresponda.
-- Aplicar deduplicacion temporal.
+- Aplicar deduplicación temporal.
 
 ### notification-service
 
 - Consumir alertas.
-- Resolver suscriptores de la linea afectada.
-- Enviar notificaciones via Telegram.
+- Resolver suscriptores de la línea afectada.
+- Enviar notificaciones vía Telegram.
 
 ### telegram-bot-service
 
 - Procesar comandos como `/start`, `/subscribe` y `/unsubscribe`.
-- Guardar suscripciones por usuario y linea.
+- Guardar suscripciones por usuario y línea.
 
-## Modelo de datos minimo
+## Modelo de datos mínimo
 
 ### ingestion database
 
-- fuentes consultadas
-- ejecuciones de polling
-- errores de fetch
+- Fuentes consultadas.
+- Ejecuciones de polling.
+- Errores de fetch.
 
 ### analysis database
 
-- observaciones agregadas por linea
-- alertas generadas
-- estado de enfriamiento
+- Observaciones agregadas por línea.
+- Alertas generadas.
+- Estado de enfriamiento.
 
 ### notification database
 
-- mensajes enviados
-- reintentos
-- fallos de entrega
+- Mensajes enviados.
+- Reintentos.
+- Fallos de entrega.
 
 ### bot database
 
-- usuarios de Telegram
-- suscripciones por linea
-- preferencias de notificacion
+- Usuarios de Telegram.
+- Suscripciones por línea.
+- Preferencias de notificación.
 
 ## Contratos de eventos
 
@@ -96,30 +96,30 @@ Construir un sistema pequeno de microservicios con broker de mensajeria, persist
 - `telegram_user_id`
 - `message`
 
-## Regla inicial de deteccion
+## Regla inicial de detección
 
 Empezar con una regla simple y explicable:
 
-- considerar una linea en riesgo si, durante varias observaciones seguidas, la media de retraso supera un umbral y hay suficientes trenes afectados.
+- Considerar una línea en riesgo si, durante varias observaciones seguidas, la media de retraso supera un umbral y hay suficientes trenes afectados.
 
 Esto es intencionalmente simple para el MVP. La meta es validar el flujo, no acertar con un modelo perfecto.
 
 ## Observabilidad
 
-- logs estructurados.
-- metricas basicas de polling, alertas y entregas.
-- trazas o correlation ids por evento.
+- Logs estructurados.
+- Métricas básicas de polling, alertas y entregas.
+- Trazas o correlation IDs por evento.
 
-## Riesgos tecnicos
+## Riesgos técnicos
 
-- calidad variable de los datos publicos.
-- rate limits o caidas de la fuente.
-- falsos positivos por umbrales demasiado agresivos.
-- deduplicacion mal ajustada.
+- Calidad variable de los datos públicos.
+- Rate limits o caídas de la fuente.
+- Falsos positivos por umbrales demasiado agresivos.
+- Deduplicación mal ajustada.
 
 ## Pruebas
 
-- pruebas de parsing GTFS-RT.
-- pruebas de deteccion con datos historicos o fixtures.
-- pruebas de envio Telegram con mocks.
-- pruebas de integracion de eventos.
+- Pruebas de parsing GTFS-RT.
+- Pruebas de detección con datos históricos o fixtures.
+- Pruebas de envío Telegram con mocks.
+- Pruebas de integración de eventos.

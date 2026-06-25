@@ -9,17 +9,23 @@
 - Artículo de Martin Fowler sobre SDD: https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html
 - Blog de Microsoft sobre SDD: https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering
 
-## Qué dicen esas referencias
+## Otras herramientas del ecosistema SDD
+
+- AWS Kiro: https://kiro.dev/ — IDE con specs formales (EARS), steering files y verificación automática.
+- Tessl: https://tessl.io/ — enfoque spec-as-source donde el código se genera completamente desde la spec.
+- BMAD Method: framework metodológico con roles definidos (PM, architect, dev).
+
+Para una comparación de filosofías (spec-first, spec-anchored, spec-as-source), ver [Niveles de rigor](01-que-es-sdd.md#niveles-de-rigor).
+
+## Qué dicen las referencias
 
 - GitHub Spec Kit formaliza un flujo con principios, spec, plan, tasks e implementación.
 - Microsoft resume el flujo como constitution, specify, clarify, plan, tasks, implement y validate.
 - Martin Fowler subraya que el término SDD todavía está en evolución y que hay varias interpretaciones.
+- AWS Kiro usa notación EARS y separa la spec en tres archivos (requirements, design, tasks).
+- Tessl trata la spec como la única fuente de verdad — el código es un subproducto regenerable.
 
 ## Skills que pueden ayudarte
-
-### En esta workspace
-
-- `customize-opencode`: no es una skill de SDD. Sirve para configurar opencode, no para aprender ni ejecutar SDD.
 
 ### En Spec Kit
 
