@@ -23,6 +23,8 @@
 
 La constitución solo se escribe una vez. Si tu proyecto ya la tiene, el flujo empieza en el paso 2.
 
+Para saber dónde guardar los artefactos de cada paso, cómo organizar múltiples work items y cómo controlar el ciclo de vida, ver [13-organizacion-de-artefactos.md](13-organizacion-de-artefactos.md).
+
 ## Regla práctica
 
 Si no puedes verificar una afirmación en la spec, probablemente está demasiado implícita.

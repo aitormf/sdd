@@ -20,6 +20,7 @@ Guía práctica para decidir cuándo usar skill, agente o comando en un flujo SD
 | Generar tareas | Comando o agente | Si el formato es repetible, un comando es suficiente; si necesitas criterio sobre dependencias, mejor agente. |
 | Implementar | Agente | Es la etapa que mas se beneficia de permisos, tools y ejecucion de varios pasos. |
 | Review y validacion | Agente read-only | Conviene limitar ediciones y centrarlo en analisis, checklist y discrepancias. |
+| Gestión del flujo | Agente (orquestador) | Lee el backlog, valida transiciones de estado, delega al agente o skill correcto. Ver [13-organizacion-de-artefactos.md](13-organizacion-de-artefactos.md). |
 
 ## Regla practica
 
@@ -33,12 +34,14 @@ Estas son las skills y agentes incluidos en el repositorio (se instalan con `scr
 
 | Paso del flujo | Tipo | Nombre |
 | --- | --- | --- |
+| Constitución del proyecto | Skill | `generate-constitution` |
 | Idea → definición clara | Skill | `idea-to-spec` |
 | Spec → plan técnico | Skill | `spec-to-plan` |
 | Plan → tareas | Skill | `plan-to-tasks` |
 | Review de spec, plan y tareas | Skill / Agente | `review-spec` / `spec-reviewer` |
 | Plan técnico con análisis | Agente | `spec-planner` |
 | Implementación | Agente | `implement` |
+| Gestión del flujo y backlog | Agente | `orchestrator` |
 
 ## Compatibilidad entre herramientas
 

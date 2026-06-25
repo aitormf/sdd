@@ -10,6 +10,8 @@ Pasar de una idea vaga a una spec clara, luego a un plan técnico, luego a tarea
 
 Ver el flujo canónico completo en [02-flujo.md](02-flujo.md). Esta guía se centra en cómo aplicarlo paso a paso en un proyecto real.
 
+Para la organización de artefactos (dónde guardar specs, planes y tareas, cómo gestionar el backlog y el ciclo de vida), ver [13-organizacion-de-artefactos.md](13-organizacion-de-artefactos.md).
+
 ## Cómo empezar sin complicarte
 
 Empieza con algo pequeño:

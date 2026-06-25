@@ -11,6 +11,24 @@ Help the user transform a vague or medium-detail idea into a specification-ready
 
 Turn an initial idea into a clear problem statement, scope, user stories, requirements, edge cases, constraints, and acceptance criteria.
 
+## Artifact organization
+
+All artifacts live under `.sdd/` at the project root. See `docs/sdd/13-organizacion-de-artefactos.md` for the full convention.
+
+When the spec is ready to write:
+
+1. Create the work item directory: `.sdd/YYYYMMDD-tipo-slug/` (e.g., `.sdd/20260625-feat-auth-login/`).
+2. Write the spec to `.sdd/YYYYMMDD-tipo-slug/spec.md`.
+3. Add an entry to `.sdd/backlog.md` with state `spec-escrita`.
+
+If `.sdd/backlog.md` does not exist yet, create it with the table header:
+
+```md
+# Backlog
+
+| Item | Estado | Descripción |
+```
+
 ## Core behavior
 
 - Start by restating the idea in one short paragraph.
@@ -72,7 +90,7 @@ Stop asking questions when enough detail exists to draft a spec with:
 - edge cases
 - acceptance criteria
 
-At that point, offer to draft the spec or generate a spec template.
+At that point, offer to draft the spec and save it to `.sdd/YYYYMMDD-tipo-slug/spec.md`.
 
 ## Reference template
 
