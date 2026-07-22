@@ -42,10 +42,12 @@ Además, la documentación de Spec Kit indica comandos opcionales como `speckit-
 
 ### Skills incluidas
 
-- `idea-to-spec`: ayuda a pasar de una idea concreta a una definición lista para escribir la spec.
+- `generate-constitution`: guía al usuario para redactar la constitución del proyecto.
+- `idea-to-spec`: entrevista estructurada para convertir una idea vaga en una definición lista para escribir la spec.
 - `spec-to-plan`: convierte una spec en un plan técnico.
 - `plan-to-tasks`: convierte un plan en tareas ejecutables.
 - `review-spec`: revisa spec, plan y tareas antes de implementar.
+- `apply-review`: aplica los cambios sugeridos en una review con decisión humana en cada paso; actualiza specs en `spec-escrita` si las decisiones les afectan.
 
 ### Agentes incluidos
 

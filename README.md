@@ -4,11 +4,11 @@ Guía práctica y kit de herramientas para aplicar Spec-Driven Development con c
 En SDD la spec es la fuente de verdad compartida. El código, los tests, el plan y las tareas derivan de esa spec, no al revés.
 ## Estructura del repositorio
 ```
-agents/         Agentes (implement, spec-planner, spec-reviewer)
-skills/         Skills (idea-to-spec, spec-to-plan, plan-to-tasks, review-spec)
+agents/         Agentes (implement, spec-planner, spec-reviewer, orchestrator)
+skills/         Skills (generate-constitution, idea-to-spec, spec-to-plan, plan-to-tasks, review-spec, apply-review)
 templates/      Plantillas (spec, plan, tasks, review)
 scripts/        Instalador y tests
-docs/sdd/       Guía completa de SDD (12 capítulos)
+docs/sdd/       Guía completa de SDD (13 capítulos)
 docs/cercanias-madrid/  Ejemplo completo de SDD aplicado
 ```
 ## Instalación en un proyecto
@@ -21,11 +21,13 @@ scripts/install-sdd.sh /ruta/al/proyecto claude codex
 CLIs soportados: `claude`, `agents`, `opencode`, `codex`.
 El instalador copia agents, skills y templates a `.sdd/` en el proyecto destino y crea los adaptadores (symlinks o archivos generados) para cada CLI seleccionado.
 ## Flujo SDD
+0. **Constitución** — skill `generate-constitution` *(una vez por proyecto)*
 1. **Idea → Spec** — skill `idea-to-spec`
 2. **Spec → Plan** — skill `spec-to-plan`
 3. **Plan → Tareas** — skill `plan-to-tasks`
 4. **Review** — skill `review-spec` o agente `spec-reviewer`
-5. **Implementación** — agente `implement`
+5. **Aplicar review** — skill `apply-review`
+6. **Implementación** — agente `implement`
 ## Documentación
 La guía completa está en [`docs/sdd/`](docs/sdd/README.md). Orden recomendado:
 1. [Qué es SDD](docs/sdd/01-que-es-sdd.md)
@@ -40,6 +42,7 @@ La guía completa está en [`docs/sdd/`](docs/sdd/README.md). Orden recomendado:
 10. [Estrategia multi herramienta](docs/sdd/10-multi-herramienta.md)
 11. [Agente implementador](docs/sdd/11-agente-implementador.md)
 12. [Instalador](docs/sdd/12-installer.md)
+13. [Organización de artefactos](docs/sdd/13-organizacion-de-artefactos.md)
 ## Tests
 ```bash
 bash scripts/tests/test-install.sh

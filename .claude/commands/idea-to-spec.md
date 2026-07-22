@@ -1,0 +1,1 @@
+../../commands/idea-to-spec.md

@@ -1,0 +1,1 @@
+../../commands/spec-to-plan.md

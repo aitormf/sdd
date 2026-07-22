@@ -35,7 +35,7 @@ If `.sdd/backlog.md` does not exist yet, create it with the table header:
 - Identify the missing information needed to write a good spec.
 - Ask the smallest useful set of questions.
 - Prioritize blocking questions first.
-- Prefer concrete choices over open-ended questions when possible.
+- When a question has a natural default, offer it as a concrete choice — but never assume it silently.
 - Keep the conversation focused on the spec, not implementation.
 
 ## Questioning strategy
@@ -67,13 +67,31 @@ If the idea is still ambiguous after a round, ask follow-up questions only for t
 - Questions about frameworks, libraries, or architecture unless the user explicitly asks for technical planning.
 - Questions that are too broad when a narrower one would unblock the spec.
 
+## Handling open questions
+
+Never assume an answer to an open question silently. When a question cannot be resolved from the information given:
+
+1. Present the open question clearly.
+2. If you have a reasonable default, offer it as one explicit option — but always give the user the choice to answer differently or to leave it as an open question in the spec.
+3. Wait for the user's decision before proceeding.
+
+Concretely, for each unresolved question ask:
+
+> **[Question]**
+> Options:
+> - A) [Your suggested default if any]
+> - B) [Alternative if obvious]
+> - C) Leave it as an open question in the spec
+> - D) [User provides their own answer]
+
+Only mark a question as resolved when the user explicitly answers or explicitly chooses to leave it open.
+
 ## Output format
 
 When responding, structure the output like this:
 
 - `What I understand`
-- `Open questions`
-- `Suggested assumptions` if needed
+- `Open questions` — list each one with options as described above; never assume
 - `Next step`
 
 ## Stop condition

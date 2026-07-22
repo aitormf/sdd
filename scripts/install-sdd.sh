@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SDD_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 CODEX_MODEL="${CODEX_MODEL:-gpt-5.4}"
 CODEX_REASONING="${CODEX_REASONING:-high}"
-ALL_CLIS=(claude agents opencode codex)
+ALL_CLIS=(claude agents opencode codex gemini)
 
 usage() {
   cat <<EOF
@@ -15,7 +15,7 @@ Install SDD agents, skills, and templates into a project.
 
 Arguments:
   dest-dir    Target project directory
-  cli ...     CLIs to configure: claude, agents, opencode, codex
+  cli ...     CLIs to configure: claude, agents, opencode, codex, gemini
               If omitted, installs for all CLIs
 
 Examples:
@@ -44,8 +44,8 @@ if [ "$#" -eq 0 ]; then
 else
   for cli in "$@"; do
     case "$cli" in
-      claude|agents|opencode|codex) CLIS+=("$cli") ;;
-      *) echo "Unknown CLI: $cli (valid: claude, agents, opencode, codex)" >&2; exit 1 ;;
+      claude|agents|opencode|codex|gemini) CLIS+=("$cli") ;;
+      *) echo "Unknown CLI: $cli (valid: claude, agents, opencode, codex, gemini)" >&2; exit 1 ;;
     esac
   done
 fi
@@ -81,6 +81,7 @@ mkdir -p "$DEST/.sdd"
 cp -R "$SDD_ROOT/agents" "$DEST/.sdd/"
 cp -R "$SDD_ROOT/skills" "$DEST/.sdd/"
 cp -R "$SDD_ROOT/templates" "$DEST/.sdd/"
+cp -R "$SDD_ROOT/commands" "$DEST/.sdd/"
 echo "    .sdd/ copied ✓"
 
 # ── Step 2: Create CLI integrations ─────────────────────────────────
@@ -191,6 +192,26 @@ generate_codex_agents() {
   done
 }
 
+# ── Command generation (per CLI) ────────────────────────────────────
+# Commands reference skills via @<cli_dir>/skills/<skill>/SKILL.md.
+# The path differs per CLI so we generate rather than symlink.
+generate_commands() {
+  local cli_dir="$1"
+  mkdir -p "$DEST/$cli_dir/commands"
+  for src in "$DEST/.sdd/commands"/*.md; do
+    local name desc skill dst
+    name="$(basename "$src" .md)"
+    desc="$(head -1 "$src" | sed 's/^description: *//')"
+    skill="$name"
+    dst="$DEST/$cli_dir/commands/$name.md"
+    {
+      echo "description: $desc"
+      echo ""
+      echo "@$cli_dir/skills/$skill/SKILL.md"
+    } > "$dst"
+  done
+}
+
 # ── Install each selected CLI ───────────────────────────────────────
 for cli in "${CLIS[@]}"; do
   echo "--- CLI: $cli ---"
@@ -198,12 +219,14 @@ for cli in "${CLIS[@]}"; do
     claude)
       create_skill_links ".claude"
       create_agent_links ".claude"
-      echo "    .claude/ ✓ (symlinks)"
+      generate_commands ".claude"
+      echo "    .claude/ ✓ (symlinks + commands)"
       ;;
     agents)
       create_skill_links ".agents"
       create_agent_links ".agents"
-      echo "    .agents/ ✓ (symlinks)"
+      generate_commands ".agents"
+      echo "    .agents/ ✓ (symlinks + commands)"
       ;;
     opencode)
       create_skill_links ".opencode"
@@ -214,6 +237,11 @@ for cli in "${CLIS[@]}"; do
       create_skill_links ".codex"
       generate_codex_agents
       echo "    .codex/ ✓ (skills: symlinks, agents: generated TOML)"
+      ;;
+    gemini)
+      create_skill_links ".gemini"
+      generate_commands ".gemini"
+      echo "    .gemini/ ✓ (skills: symlinks, commands: generated)"
       ;;
   esac
 done
